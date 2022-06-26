@@ -4,7 +4,6 @@ use crate::{
 };
 use dotenv::dotenv;
 use futures::{stream::FuturesUnordered, StreamExt, TryStreamExt};
-use log::info;
 
 mod application;
 mod infra;
@@ -18,14 +17,14 @@ async fn run_async_processor() {
             let producer = new_kafka_producer().clone();
             let owned_message = borrowed_message.detach();
             tokio::spawn(async move {
-                info!("produce in execution: {:?}", owned_message);
+                println!("produce in execution: {:?}", owned_message);
                 produce(owned_message, producer).await;
             });
             Ok(())
         });
-    info!("Starting event loop");
+    println!("Starting event loop");
     stream_processor.await.expect("stream processing failed");
-    info!("Stream processing terminated!");
+    println!("Stream processing terminated!");
 }
 
 #[tokio::main]

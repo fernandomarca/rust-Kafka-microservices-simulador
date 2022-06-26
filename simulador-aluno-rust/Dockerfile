@@ -19,6 +19,6 @@ RUN apt-get update && \
   libsqlite3-dev \
   libzstd-dev
 
-RUN cargo install -q diesel_cli
+# RUN cargo install -q diesel_cli
 
 CMD ["tail", "-f", "/dev/null"]
